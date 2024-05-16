@@ -2,7 +2,7 @@ name: Build
 
 on:
   schedule:
-    - cron: '* 1 * 1 *'
+    - cron: '* 1 1 1 *'
     
   watch:
     types: [started]
@@ -59,7 +59,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir clang
-        git clone https://gitlab.com/LeCmnGend/clang.git -b clang-17 clang
+        git clone https://gitlab.com/LeCmnGend/clang.git -b clang-13 clang
         
     - name: Fetch GCC-AOSP
       run: |
@@ -73,13 +73,13 @@ jobs:
         if [ ${{ env.ENABLE_GCC_ARM32 }} = true ]; then
             mkdir gcc-32
             git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git --depth=1 -b lineage-19.1 gcc-32
-            echo "GCC_32=CROSS_COMPILE_COMPAT=$GITHUB_WORKSPACE/kernel_workspace/gcc-32/bin/arm-linux-androideabi-" >> $GITHUB_ENV
+            echo "GCC_32=CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/kernel_workspace/gcc-32/bin/arm-linux-androideabi-" >> $GITHUB_ENV
         fi
 
     - name: Fetch kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/ArvinPWD/Shishiro.git -b 14.0 --depth=1 android-kernel
+        git clone https://github.com/RismaYNT/oc_a13r.git -b a14r --depth=1 android-kernel
         
     - name: KernelSU
       if: env.USE_KERNELSU == 'true'
