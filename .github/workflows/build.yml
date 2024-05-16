@@ -59,8 +59,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir clang
-        wget https://github.com/XSans0/WeebX-Clang/releases/download/WeebX-Clang-18.1.6-release/WeebX-Clang-18.1.6.tar.gz
-        tar -C clang/ -xvzf WeebX-Clang-18.1.6.tar.gz
+        git clone https://gitlab.com/LeCmnGend/clang.git -b clang-17 clang
         
     - name: Fetch GCC-AOSP
       run: |
@@ -98,9 +97,9 @@ jobs:
     - name: Setup Configuration
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        sed -i 's/^CONFIG_LOCALVERSION=".*"/CONFIG_LOCALVERSION="-GabutKernel"/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+        sed -i 's/^CONFIG_LOCALVERSION=".*"/CONFIG_LOCALVERSION="-${{ env.CONFIG_LOCALVERSION }}"/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
         if [ ${{ env.DISABLE-LTO }} = true ]; then
-            sed -i 's/^CONFIG_LOCALVERSION=".*"/CONFIG_LOCALVERSION="-Gabut"/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+            sed -i 's/^CONFIG_LOCALVERSION=".*"/CONFIG_LOCALVERSION="-${{ env.CONFIG_LOCALVERSION }}"/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
             sed -i 's/CONFIG_LTO=y/CONFIG_LTO=n/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
             sed -i 's/CONFIG_LTO_CLANG=y/CONFIG_LTO_CLANG=n/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
             sed -i 's/CONFIG_THINLTO=y/CONFIG_THINLTO=n/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
