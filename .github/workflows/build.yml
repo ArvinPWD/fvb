@@ -79,7 +79,7 @@ jobs:
     - name: Fetch kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/ArvinPWD/Shishiro.git -b 14.0 --depth=1 android-kernel
+        git clone https://github.com/ArvinPWD/android_kernel_xiaomi_mt6768.git -b Base --depth=1 android-kernel
         
     - name: KernelSU
       if: env.USE_KERNELSU == 'true'
@@ -120,8 +120,8 @@ jobs:
       run: |
        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang/bin:$PATH
-        export KBUILD_BUILD_USER="PWD1001"
-        export KBUILD_BUILD_HOST="1001DWP"
+        export KBUILD_BUILD_USER="PWD"
+        export KBUILD_BUILD_HOST="1001"
         make -j$(nproc --all) CC=clang O=out ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} ${{ env.KERNEL_CONFIG }}
         if [ ${{ env.ENABLE_CCACHE }} = true ]; then
             make -j$(nproc --all) CC="ccache clang" O=out ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }}
