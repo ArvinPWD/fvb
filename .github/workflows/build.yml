@@ -58,9 +58,8 @@ jobs:
     - name: Fetch Clang
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        mkdir clang && cd clang
-        bash <(curl -s "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman") -S
-        cd
+        mkdir clang
+        git clone --depth=1 https://gitlab.com/RismaPwd/clang.git -b clang-17 clang
         
     - name: Fetch GCC-AOSP
       run: |
