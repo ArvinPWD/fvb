@@ -60,7 +60,10 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir clang
-        git clone https://gitlab.com/RismaPwd/clang.git -b neutron --depth=1 clang
+        LATEST_RELEASE_INFO=$(curl -s https://api.github.com/repos/ZyCromerZ/Clang/releases/latest)
+        TARBALL_URL=$(echo "$LATEST_RELEASE_INFO" | jq -r '.assets[0].browser_download_url')
+        wget -O clang-latest.tar.gz "$TARBALL_URL"
+        tar -C clang/ -zxvf clang-latest.tar.gz
         
     - name: Fetch GCC-AOSP
       run: |
