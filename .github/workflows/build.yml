@@ -41,6 +41,7 @@ jobs:
         echo "UPLOADNAME=$(cat config.env | grep "UPLOADNAME" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
         echo "BUILD_USER=$(cat config.env | grep "BUILD_USER" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
         echo "BUILD_NAME=$(cat config.env | grep "BUILD_NAME" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+        echo "GIT_CLONE_PROTECTION_ACTIVE=false"
 
     - name: Set swap to 24G
       uses: pierotofy/set-swap-space@master
@@ -54,7 +55,6 @@ jobs:
         sudo apt-get update --fix-missing
         sudo apt-get install git ccache automake flex lzop bison gperf build-essential zip curl zlib1g-dev g++-multilib libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev liblz4-tool make optipng maven libssl-dev pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl bc libc6-dev-i386 lib32ncurses5-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc unzip device-tree-compiler python2 python3 zstd
         mkdir -p $GITHUB_WORKSPACE/kernel_workspace
-        GIT_CLONE_PROTECTION_ACTIVE=false
 
     - name: Fetch Clang
       run: |
