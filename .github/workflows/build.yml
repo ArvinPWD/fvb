@@ -58,9 +58,9 @@ jobs:
     - name: Fetch Clang
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        mkdir clang
-        git clone --depth=1 https://gitlab.com/RismaPwd/clang.git -b clang-17 clang
-        
+        mkdir clang && cd clang 
+        bash <(curl -s "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman") -S
+        cd
     - name: Fetch GCC-AOSP
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
@@ -79,7 +79,7 @@ jobs:
     - name: Fetch kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/ArvinPWD/android_kernel_xiaomi_mt6768.git -b Base --depth=1 android-kernel
+        git clone https://github.com/ArvinPWD/android_kernel_xiaomi_mt6768.git -b B1 --depth=1 android-kernel
         
     - name: KernelSU
       if: env.USE_KERNELSU == 'true'
