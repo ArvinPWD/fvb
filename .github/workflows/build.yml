@@ -59,7 +59,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir clang
-        git clone https://gitlab.com/LeCmnGend/clang.git -b neutron --depth=1 clang
+        git clone https://gitlab.com/RismaPwd/clang.git -b neutron --depth=1 clang
         
     - name: Fetch GCC-AOSP
       run: |
