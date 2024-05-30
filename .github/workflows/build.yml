@@ -59,24 +59,23 @@ jobs:
     - name: Fetch Clang
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        mkdir clang
-        LATEST_RELEASE_INFO=$(curl -s https://api.github.com/repos/ZyCromerZ/Clang/releases/latest)
-        TARBALL_URL=$(echo "$LATEST_RELEASE_INFO" | jq -r '.assets[0].browser_download_url')
-        wget -O clang-latest.tar.gz "$TARBALL_URL"
-        tar -C clang/ -zxvf clang-latest.tar.gz
+        mkdir clang && cd clang
+        wget -N -q https://raw.githubusercontent.com/greenforce-project/greenforce_clang/main/latest_url.txt
+        source latest_url.txt; rm -rf latest_url.txt
+        wget -c "$latest_url" -O - | tar -k --use-compress-program=unzstd -xf - -C
         
     - name: Fetch GCC-AOSP
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         if [ ${{ env.ENABLE_GCC_ARM64 }} = true ]; then
             mkdir gcc-64
-            git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git --depth=1 -b lineage-19.1 gcc-64
+            git clone https://github.com/greenforce-project/gcc-arm64 -b main gcc-64
             echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/kernel_workspace/gcc-64/bin/aarch64-linux-android-" >> $GITHUB_ENV            
         fi
 
         if [ ${{ env.ENABLE_GCC_ARM32 }} = true ]; then
             mkdir gcc-32
-            git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git --depth=1 -b lineage-19.1 gcc-32
+            git clone https://github.com/greenforce-project/gcc-arm64 -b main gcc-32
             echo "GCC_32=CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/kernel_workspace/gcc-32/bin/arm-linux-androideabi-" >> $GITHUB_ENV
         fi
 
