@@ -61,7 +61,9 @@ jobs:
         cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir clang && cd clang
         wget https://github.com/greenforce-project/greenforce_clang/releases/download/29052024/greenforce-clang-19.0.0git-29052024-0316.tar.zst
-        wget -c "$greenforce-clang-19.0.0git-29052024-0316.tar.zst" -O - | tar -k --use-compress-program=unzstd -xf - -C
+        tar --use-compress-program=unzstd -xvf greenforce-clang-19.0.0git-29052024-0316.tar.zst
+        tar --zstd -xvf greenforce-clang-19.0.0git-29052024-0316.tar.zst
+        cd
         
     - name: Fetch GCC-AOSP
       run: |
