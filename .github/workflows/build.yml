@@ -60,7 +60,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir clang && cd clang
-        https://github.com/greenforce-project/greenforce_clang/releases/download/29052024/greenforce-clang-19.0.0git-29052024-0316.tar.zst
+        wget https://github.com/greenforce-project/greenforce_clang/releases/download/29052024/greenforce-clang-19.0.0git-29052024-0316.tar.zst
         wget -c "$greenforce-clang-19.0.0git-29052024-0316.tar.zst" -O - | tar -k --use-compress-program=unzstd -xf - -C
         
     - name: Fetch GCC-AOSP
@@ -69,13 +69,13 @@ jobs:
         if [ ${{ env.ENABLE_GCC_ARM64 }} = true ]; then
             mkdir gcc-64
             git clone https://github.com/greenforce-project/gcc-arm64 -b main gcc-64
-            echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/kernel_workspace/gcc-64/bin/aarch64-linux-android-" >> $GITHUB_ENV            
+            echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/kernel_workspace/gcc-64/bin/aarch64-linux-gnu-" >> $GITHUB_ENV            
         fi
 
         if [ ${{ env.ENABLE_GCC_ARM32 }} = true ]; then
             mkdir gcc-32
-            git clone https://github.com/greenforce-project/gcc-arm64 -b main gcc-32
-            echo "GCC_32=CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/kernel_workspace/gcc-32/bin/arm-linux-androideabi-" >> $GITHUB_ENV
+            git clone https://github.com/greenforce-project/gcc-arm32 -b main gcc-32
+            echo "GCC_32=CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/kernel_workspace/gcc-32/bin/arm-linux-gnueabi-" >> $GITHUB_ENV
         fi
 
     - name: Fetch kernel source
