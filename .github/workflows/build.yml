@@ -58,8 +58,9 @@ jobs:
     - name: Fetch Clang
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        mkdir clang
-        git clone https://gitlab.com/LeCmnGend/clang.git -b clang-17 clang
+        mkdir clang && cd clang
+        bash <(curl -s https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman) -S=latest
+        bash <(curl -s https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman) --patch=glibc
         
     - name: Fetch GCC-AOSP
       run: |
