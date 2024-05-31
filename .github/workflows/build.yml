@@ -69,7 +69,7 @@ jobs:
         cd $GITHUB_WORKSPACE/kernel_workspace
         if [ ${{ env.ENABLE_GCC_ARM64 }} = true ]; then
             mkdir gcc-64
-            git clone https://github.com/greenforce-project/gcc-arm64 -b --depth=1 main gcc-64
+            git clone https://github.com/greenforce-project/gcc-arm64 --depth=1 -b main gcc-64
             echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/kernel_workspace/gcc-64/bin/aarch64-linux-gnu-" >> $GITHUB_ENV            
         fi
 
