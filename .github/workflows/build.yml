@@ -82,7 +82,7 @@ jobs:
     - name: Fetch kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/Yourfurina/kernel_xiaomi_mt6768.git -b 14.0 --depth=1 android-kernel
+        git clone https://github.com/Yourfurina/kernel_xiaomi_mt6768.git -b Lineage-1 --depth=1 android-kernel
         
     - name: KernelSU
       if: env.USE_KERNELSU == 'true'
