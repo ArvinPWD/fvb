@@ -69,20 +69,20 @@ jobs:
         cd $GITHUB_WORKSPACE/kernel_workspace
         if [ ${{ env.ENABLE_GCC_ARM64 }} = true ]; then
             mkdir gcc-64
-            git clone https://github.com/greenforce-project/gcc-arm64 -b main gcc-64
+            git clone https://github.com/greenforce-project/gcc-arm64 -b --depth=1 main gcc-64
             echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/kernel_workspace/gcc-64/bin/aarch64-linux-gnu-" >> $GITHUB_ENV            
         fi
 
         if [ ${{ env.ENABLE_GCC_ARM32 }} = true ]; then
             mkdir gcc-32
-            git clone https://github.com/greenforce-project/gcc-arm32 -b main gcc-32
+            git clone https://github.com/greenforce-project/gcc-arm32 --depth=1 -b main gcc-32
             echo "GCC_32=CROSS_COMPILE_COMPAT=$GITHUB_WORKSPACE/kernel_workspace/gcc-32/bin/arm-linux-gnueabi-" >> $GITHUB_ENV
         fi
 
     - name: Fetch kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/ArvinPWD/Shi.git -b 14.0 --depth=500 android-kernel
+        git clone https://github.com/ArvinPWD/Shi.git -b 14.0 --depth=1 android-kernel
         
     - name: KernelSU
       if: env.USE_KERNELSU == 'true'
