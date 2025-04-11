@@ -101,15 +101,17 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         sed -i 's/^CONFIG_LOCALVERSION=".*"/CONFIG_LOCALVERSION="-${{ env.CONFIG_LOCALVERSION }}"/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
-        if [ ${{ env.DISABLE-LTO }} = true ]; then
-            sed -i 's/^CONFIG_LOCALVERSION=".*"/CONFIG_LOCALVERSION="-${{ env.CONFIG_LOCALVERSION }}"/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
-            sed -i 's/CONFIG_LTO=y/CONFIG_LTO=n/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
-            sed -i 's/CONFIG_LTO_CLANG=y/CONFIG_LTO_CLANG=n/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
-            sed -i 's/CONFIG_THINLTO=y/CONFIG_THINLTO=n/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
-            echo "CONFIG_LTO_NONE=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+        if [ -d KernelSU ]; then
+            KSU_VERSION="_$(cd KernelSU && expr $(/usr/bin/git rev-list --count HEAD) + 10200)"
+        else
+            KSU_VERSION=""
+        cd KernelSU-Next/
+        git apply $GITHUB_WORKSPACE/patches/SuSFS.patch
+            
         fi
-        if [ ${{ env.DISABLE_CC_WERROR }} = true ]; then
-            echo "CONFIG_CC_WERROR=n" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+        echo "UPLOADNAME=-KernelSU$KSU_VERSION" >> $GITHUB_ENV
+        if [ ${{ env.KSU_REVERT }} = true ]; then
+            git apply $GITHUB_WORKSPACE/patches/KSU_REVERT.patch
         fi
 
     - name: Setup ccache
