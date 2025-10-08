@@ -79,7 +79,7 @@ jobs:
     - name: Fetch kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/RismaYNT/oc_a13r.git -b a14r --depth=1 android-kernel
+        ghttps://github.com/ArvinPWD/android_kernel_samsung_a145p.git -b SM-A145F --depth=1 android-kernel
         
     - name: KernelSU
       if: env.USE_KERNELSU == 'true'
