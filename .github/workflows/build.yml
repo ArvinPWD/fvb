@@ -59,7 +59,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir clang
-        git clone https://gitlab.com/LeCmnGend/clang.git -b clang-13 clang
+        https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone.git -b 11 clang
         
     - name: Fetch GCC-AOSP
       run: |
